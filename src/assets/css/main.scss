@@ -1,0 +1,91 @@
+:root {
+  overflow: hidden;
+}
+
+body {
+  overflow: hidden;
+}
+
+.el-button {
+  border-radius: 50px;
+}
+.el-button.is-circle {
+  padding: 2px;
+}
+.el-scrollbar > .el-scrollbar__bar {
+  opacity: 1 !important;
+}
+.el-icon-arrow-up:before,
+.el-icon-arrow-down:before {
+  color: black !important;
+  font-weight: 800;
+}
+.poverty-user {
+  .el-input.is-disabled {
+    .el-input__inner {
+      color: #202020;
+    }
+  }
+}
+.el-form-item__label {
+  font-size: 12px;
+  line-height: 16px;
+  text-align: left;
+}
+.el-form-item {
+  display: flex;
+  flex-direction: column;
+}
+.el-select,
+.el-autocomplete {
+  width: 100%;
+}
+.el-button--primary {
+  background-color: #ff6666 !important;
+  border-color: #ff6666 !important;
+  &:focus {
+    background-color: #ff6666 !important;
+    border-color: #ff6666 !important;
+  }
+}
+@media screen and (min-width: 320px) {
+  .el-button.is-circle {
+    padding: 2px;
+  }
+  .el-select-dropdown__item,
+  .el-input__inner {
+    font-size: 12px;
+    // line-height: 16px;
+  }
+  .el-form-item__label,
+  .el-form-item__error {
+    font-size: 12px;
+    line-height: 16px;
+    text-align: left;
+  }
+}
+@media screen and (min-width: 768px) {
+  .el-button.is-circle {
+    padding: 12px;
+  }
+  .el-select-dropdown__item,
+  .el-input__inner {
+    font-size: 29px;
+    // line-height: 16px;
+  }
+  .el-form-item__label,
+  .el-form-item__error {
+    font-size: 29px;
+    line-height: 39px;
+    text-align: left;
+  }
+  .el-form-item {
+    height: 130px;
+  }
+  .el-input__inner {
+    height: 60px;
+  }
+  .el-button {
+    font-size: 29px;
+  }
+}
