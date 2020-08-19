@@ -1,4 +1,3 @@
-import Resources from "./resources";
 
 /**
  * Create an API instance using the provided API handler.
@@ -7,6 +6,6 @@ import Resources from "./resources";
  */
 export default function createApiInstance(apiHandler) {
   return {
-    poverty: Resources.PovertyResource(apiHandler),
+    // poverty: Resources.PovertyResource(apiHandler),
   };
 }

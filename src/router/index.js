@@ -1,29 +1,19 @@
-/*
- * @Author: yangli
- * @LastEditor: yangli
- * @email: liy@ccccit.com.cn
- * @Date: 2020-04-27 14:34:46
- * @LastEditTime: 2020-06-18 10:16:37
- * @FilePath: /hch5/src/router/index.js
- */ 
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import { User, Success } from '@/pages';
+import { user } from '@/pages';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/user',
-    component: User,
-    meta: { title: '客户信息' }
+    path: '/',
+    redirect: '/submit'
   },
   {
-    name: 'success',
-    path: '/success',
-    component: Success,
-    meta: { title: '成功提交' }
+    path: '/submit',
+    component: user,
+    meta: { title: '客户信息' }
   },
 ];
 

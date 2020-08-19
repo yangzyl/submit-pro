@@ -8,7 +8,7 @@
 /* CSS goes here */
 #app {
   height: 100vh;
-  background-color: #F9E0DF;
+  background-color: #fff;
   overflow-y: auto;
   font-family: Microsoft Yahei
 }
