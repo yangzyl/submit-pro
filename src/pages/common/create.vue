@@ -42,17 +42,19 @@
           <el-form-item label="手机号码" prop="phonenum">
             <el-input placeholder="请填写手机号" v-model.trim="ruleForm.phonenum"></el-input>
           </el-form-item>
-          <div> 开户时间: <span style="color: red"> 周一至周五9:00-12:00, 13:30-15:00, 20:30-22:00</span> 	</div>
-          <div style="margin: .32rem 0">认证照片(身份证正面)</div>
-          <el-upload
-            class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
+          <div style="margin: .2rem 0 .4rem 0"> 开户时间: <span style="color: red;"> 周一至周五9:00-12:00, 13:30-15:00, 20:30-22:00</span> 	</div>
+          <el-form-item label="认证照片" prop="imageUrl">
+            <el-upload
+              class="avatar-uploader"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload">
+              <img v-if="ruleForm.imageUrl" :src="ruleForm.imageUrl" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+            <span>身份证正面</span>
+          </el-form-item>
           <el-button style="margin: .32rem 0" type="primary" class="submitButton" @click="submitForm">确认开户</el-button>
         </el-form>
   </div>
@@ -71,7 +73,6 @@ export default {
   },
   data() {
     return {
-      
       dialogCreateFormVisible: true,
       count: 5,
       ruleForm: {
@@ -79,7 +80,8 @@ export default {
         cardnum:'',
         agencynum: '',
         phonenum: '',
-        cardType: '大陆身份证'
+        cardType: '大陆身份证',
+        imageUrl: '',
       },
       rules: {
         cardnum: [
@@ -97,6 +99,9 @@ export default {
         phonenum: [
           { required: true, message: "请输入手机号码", trigger: "blur" },
         ],
+        imageUrl: [
+          { required: true, message: "请输入身份证正面照片", trigger: "blur" },
+        ],
       },
     }
   },
@@ -105,11 +110,25 @@ export default {
       this.$refs['ruleForm'].validate(valid => {
         if (valid) {
           console.log(valid)
+          alert('成功')
         } else {
           console.log("error submit!!");
         }
       });
-    }
+    },
+    handleAvatarSuccess(res, file) {
+        this.ruleForm.imageUrl = URL.createObjectURL(file.raw);
+        this.$refs['ruleForm'].validateField('imageUrl')
+      },
+      beforeAvatarUpload(file) {
+        // const isLt2M = file.size / 1024 / 1024 < 2;
+
+        // if (!isLt2M) {
+        //   this.$message.error('上传头像图片大小不能超过 2MB!');
+        // }
+        // return isLt2M;
+        return true
+      }
   }
 
 }

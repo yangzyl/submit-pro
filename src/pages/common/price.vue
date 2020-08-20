@@ -102,6 +102,7 @@ export default {
       this.$refs['ruleUserForm'].validate(valid => {
         if (valid) {
           console.log(valid)
+          alert('成功')
         } else {
           console.log("error submit!!");
         }
