@@ -46,11 +46,11 @@
           <el-form-item label="认证照片" prop="imageUrl">
             <el-upload
               class="avatar-uploader"
-              action="https://jsonplaceholder.typicode.com/posts/"
+              action="api/image"
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload">
-              <img v-if="ruleForm.imageUrl" :src="ruleForm.imageUrl" class="avatar">
+              <img v-if="ruleForm.imageUrl" :src="`api/static/uploads/${ruleForm.imageUrl}`" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
             <span>身份证正面</span>
@@ -106,18 +106,24 @@ export default {
     }
   },
   methods: {
+    async submitRequest() {
+      try {
+        await this.$api().poverty.sendUser(this.ruleForm);
+      } catch (error) {
+        console.log(error)
+      }
+    },
     submitForm() {
       this.$refs['ruleForm'].validate(valid => {
         if (valid) {
-          console.log(valid)
-          alert('成功')
+          this.submitRequest();
         } else {
           console.log("error submit!!");
         }
       });
     },
     handleAvatarSuccess(res, file) {
-        this.ruleForm.imageUrl = URL.createObjectURL(file.raw);
+        this.ruleForm.imageUrl = `${res.data.fileName}`;
         this.$refs['ruleForm'].validateField('imageUrl')
       },
       beforeAvatarUpload(file) {

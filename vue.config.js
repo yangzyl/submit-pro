@@ -35,6 +35,15 @@ module.exports = {
       warnings: false,
       errors: true,
     },
+    proxy: {
+      '/api/': {
+              target: 'http://localhost:3000/',
+              changeOrigin:true,
+              pathRewrite: {
+                '^/api/':''
+              }
+          }
+      }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

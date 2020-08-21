@@ -4,7 +4,7 @@ import createApiInstance from "./create-api-instance";
 
 const server_config = {
   requestTimeout: 8000,
-  apiEndpoints: "",
+  apiEndpoints: "/api",
 };
 
 export default function API() {
