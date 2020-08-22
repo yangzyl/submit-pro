@@ -50,7 +50,7 @@
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload">
-              <img v-if="ruleForm.imageUrl" :src="`api/static/uploads/${ruleForm.imageUrl}`" class="avatar">
+              <img v-if="ruleForm.imageUrl" :src="`/api/static/uploads/${ruleForm.imageUrl}`" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
             <span>身份证正面</span>
@@ -62,7 +62,7 @@
               :show-file-list="false"
               :on-success="handleAvatarSuccessBack"
               :before-upload="beforeAvatarUpload">
-              <img v-if="ruleForm.imageUrlBack" :src="`api/static/uploads/${ruleForm.imageUrlBack}`" class="avatar">
+              <img v-if="ruleForm.imageUrlBack" :src="`/api/static/uploads/${ruleForm.imageUrlBack}`" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
             <span>身份证反面</span>
@@ -141,18 +141,23 @@ export default {
   methods: {
     async submitRequest() {
       try {
-        await this.$api().poverty.sendUser(this.ruleForm);
-        this.ruleForm = {
-          username:'',
-          cardnum:'',
-          agencynum: '',
-          phonenum: '',
-          cardType: '大陆身份证',
-          imageUrl: '',
-          imageUrlBack:'',
+        const result = await this.$api().poverty.sendUser(this.ruleForm);
+        if (result.fields.status) {
+           this.$message.error(result.fields.statusText);
+        } else {
+          this.ruleForm = {
+            username:'',
+            cardnum:'',
+            agencynum: '',
+            phonenum: '',
+            cardType: '大陆身份证',
+            imageUrl: '',
+            imageUrlBack:'',
+          }
         }
+
       } catch (error) {
-        console.log(error)
+        this.$message.error('服务器出错了');
       }
     },
     submitForm() {

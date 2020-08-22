@@ -103,17 +103,21 @@ export default {
   methods: {
     async submitRequest() {
       try {
-        await this.$api().poverty.sendAccount(this.ruleUserForm);
-        this.ruleUserForm = {
-          account: '',
-          username: '',
-          workChoice: '线下入金',
-          orderCount: '',
-          bankcount: '',
-          bankinfo: '',
+        const result = await this.$api().poverty.sendAccount(this.ruleUserForm);
+        if (result.fields.status) {
+           this.$message.error(result.fields.statusText);
+        } else {
+          this.ruleUserForm = {
+            account: '',
+            username: '',
+            workChoice: '线下入金',
+            orderCount: '',
+            bankcount: '',
+            bankinfo: '',
+          }
         }
       } catch (error) {
-        console.log(error)
+        this.$message.error('服务器出错了');
       }
     },
     submitForm() {
