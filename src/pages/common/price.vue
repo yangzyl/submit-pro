@@ -30,13 +30,16 @@
                 {{'银联支付'}}
               </div>
               <div class="cardText">
-                银行:中国农业银行股份有限公司郑州中州大道支行
+                公司出入金账户：
               </div>
               <div class="cardText">
-                姓名:王鹏真
+                户名：黄安
               </div>
               <div class="cardText">
-                账号:6213360719900713175
+                开户银行:光大银行上海松江支行
+              </div>
+              <div class="cardText">
+                账号:6231 5606 0156 7689
               </div>
             </el-card>
             <el-form-item label="订单金额" prop="orderCount">
@@ -98,11 +101,25 @@ export default {
     }
   },
   methods: {
+    async submitRequest() {
+      try {
+        await this.$api().poverty.sendAccount(this.ruleUserForm);
+        this.ruleUserForm = {
+          account: '',
+          username: '',
+          workChoice: '线下入金',
+          orderCount: '',
+          bankcount: '',
+          bankinfo: '',
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
     submitForm() {
       this.$refs['ruleUserForm'].validate(valid => {
         if (valid) {
-          console.log(valid)
-          alert('成功')
+           this.submitRequest()
         } else {
           console.log("error submit!!");
         }

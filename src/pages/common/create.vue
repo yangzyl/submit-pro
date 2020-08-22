@@ -55,12 +55,26 @@
             </el-upload>
             <span>身份证正面</span>
           </el-form-item>
+          <el-form-item prop="imageUrlBack">
+            <el-upload
+              class="avatar-uploader"
+              action="api/image"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccessBack"
+              :before-upload="beforeAvatarUpload">
+              <img v-if="ruleForm.imageUrlBack" :src="`api/static/uploads/${ruleForm.imageUrlBack}`" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+            <span>身份证反面</span>
+          </el-form-item>
           <el-button style="margin: .32rem 0" type="primary" class="submitButton" @click="submitForm">确认开户</el-button>
         </el-form>
   </div>
 </template>
 
 <script>
+import PHONE_NUMBER_REG from "@/utils/phoneReg.js";
+// import idCardNoUtil from "@/utils/checkCardCode";
 export default {
   mounted() {
     this.handle = setInterval(() => {
@@ -72,8 +86,18 @@ export default {
     }, 1000)
   },
   data() {
+    // const checkCardCode = (rule, value, callback) => {
+    //   if (!value) {
+    //     callback(new Error('身份证号码不能为空'));
+    //   } else if(!idCardNoUtil.checkIdCardNo(value)) {
+    //     callback(new Error('请输入正确的身份证号码'));
+    //   } else {
+    //     callback();
+    //   }
+    // };
     return {
-      dialogCreateFormVisible: true,
+      // checkCardCode,
+      dialogCreateFormVisible: false,
       count: 5,
       ruleForm: {
         username:'',
@@ -82,6 +106,7 @@ export default {
         phonenum: '',
         cardType: '大陆身份证',
         imageUrl: '',
+        imageUrlBack:'',
       },
       rules: {
         cardnum: [
@@ -98,9 +123,17 @@ export default {
         ],
         phonenum: [
           { required: true, message: "请输入手机号码", trigger: "blur" },
+          {
+            pattern: PHONE_NUMBER_REG,
+            message: "请输入正确电话",
+            trigger: "blur"
+          }
         ],
         imageUrl: [
           { required: true, message: "请输入身份证正面照片", trigger: "blur" },
+        ],
+        imageUrlBack: [
+          { required: true, message: "请输入身份证反面照片", trigger: "blur" },
         ],
       },
     }
@@ -109,6 +142,15 @@ export default {
     async submitRequest() {
       try {
         await this.$api().poverty.sendUser(this.ruleForm);
+        this.ruleForm = {
+          username:'',
+          cardnum:'',
+          agencynum: '',
+          phonenum: '',
+          cardType: '大陆身份证',
+          imageUrl: '',
+          imageUrlBack:'',
+        }
       } catch (error) {
         console.log(error)
       }
@@ -125,6 +167,10 @@ export default {
     handleAvatarSuccess(res, file) {
         this.ruleForm.imageUrl = `${res.data.fileName}`;
         this.$refs['ruleForm'].validateField('imageUrl')
+      },
+    handleAvatarSuccessBack(res, file) {
+        this.ruleForm.imageUrlBack = `${res.data.fileName}`;
+        this.$refs['ruleForm'].validateField('imageUrlBack')
       },
       beforeAvatarUpload(file) {
         // const isLt2M = file.size / 1024 / 1024 < 2;
