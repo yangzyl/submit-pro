@@ -191,6 +191,10 @@ export default {
         if (result.fields.status) {
            this.$message.error(result.fields.statusText);
         } else {
+          this.$message({
+            message: '开户成功',
+            type: 'success'
+          });
           this.ruleForm = {
             username:'',
             cardnum:'',

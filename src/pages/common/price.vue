@@ -107,6 +107,10 @@ export default {
         if (result.fields.status) {
            this.$message.error(result.fields.statusText);
         } else {
+          this.$message({
+            message: '提交成功',
+            type: 'success'
+          });
           this.ruleUserForm = {
             account: '',
             username: '',
