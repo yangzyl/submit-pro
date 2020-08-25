@@ -192,7 +192,7 @@ export default {
            this.$message.error(result.fields.statusText);
         } else {
           this.$message({
-            message: '开户成功',
+            message: '提交开户成功',
             type: 'success'
           });
           this.ruleForm = {
