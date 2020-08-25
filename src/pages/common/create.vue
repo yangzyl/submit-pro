@@ -39,10 +39,16 @@
           <el-form-item label="机构代码" prop="agencynum">
             <el-input placeholder="请填写机构代码" v-model.trim="ruleForm.agencynum"></el-input>
           </el-form-item>
+          <el-form-item label="银行卡号" prop="bankcount">
+            <el-input placeholder="请填写开户银行卡号" v-model.trim="ruleForm.bankcount"></el-input>
+          </el-form-item>
+          <el-form-item label="开户支行" prop="bankinfo">
+            <el-input placeholder="请填写开户支行" v-model.trim="ruleForm.bankinfo"></el-input>
+          </el-form-item>
           <el-form-item label="手机号码" prop="phonenum">
             <el-input placeholder="请填写手机号" v-model.trim="ruleForm.phonenum"></el-input>
           </el-form-item>
-          <div style="margin: .2rem 0 .4rem 0"> 开户时间: <span style="color: red;"> 周一至周五9:00-12:00, 13:30-15:00, 20:30-22:00</span> 	</div>
+          <div style="margin: .2rem 0 .4rem 0"> 开户时间: <span style="color: red;"> 周一到周日 24小时</span> 	</div>
           <el-form-item label="认证照片" prop="imageUrl">
             <el-upload
               class="avatar-uploader"
@@ -66,6 +72,30 @@
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
             <span>身份证反面</span>
+          </el-form-item>
+          <el-form-item label="认证照片" prop="imageUrlBank">
+            <el-upload
+              class="avatar-uploader"
+              action="api/image"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccessBank"
+              :before-upload="beforeAvatarUpload">
+              <img v-if="ruleForm.imageUrlBank" :src="`/api/static/uploads/${ruleForm.imageUrlBank}`" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+            <span>银行卡正面</span>
+          </el-form-item>
+          <el-form-item prop="imageUrlBankBack">
+            <el-upload
+              class="avatar-uploader"
+              action="api/image"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccessBankBack"
+              :before-upload="beforeAvatarUpload">
+              <img v-if="ruleForm.imageUrlBankBack" :src="`/api/static/uploads/${ruleForm.imageUrlBankBack}`" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+            <span>银行卡反面</span>
           </el-form-item>
           <el-button style="margin: .32rem 0" type="primary" class="submitButton" @click="submitForm">确认开户</el-button>
         </el-form>
@@ -107,6 +137,10 @@ export default {
         cardType: '大陆身份证',
         imageUrl: '',
         imageUrlBack:'',
+        imageUrlBank:'',
+        imageUrlBankBack:'',
+        bankcount: '',
+        bankinfo: '',
       },
       rules: {
         cardnum: [
@@ -121,6 +155,12 @@ export default {
         agencynum: [
           { required: true, message: "请输入机构代码", trigger: "blur" },
         ],
+        bankcount: [
+          { required: true, message: "请输入开户银行卡号", trigger: "blur" },
+        ],
+        bankinfo: [
+          { required: true, message: "请输入开户支行", trigger: "blur" },
+        ],
         phonenum: [
           { required: true, message: "请输入手机号码", trigger: "blur" },
           {
@@ -134,6 +174,12 @@ export default {
         ],
         imageUrlBack: [
           { required: true, message: "请输入身份证反面照片", trigger: "blur" },
+        ],
+        imageUrlBank: [
+          { required: true, message: "请输入银行卡正面照片", trigger: "blur" },
+        ],
+        imageUrlBankBack: [
+          { required: true, message: "请输入银行卡反面照片", trigger: "blur" },
         ],
       },
     }
@@ -153,6 +199,10 @@ export default {
             cardType: '大陆身份证',
             imageUrl: '',
             imageUrlBack:'',
+            imageUrlBank:'',
+            imageUrlBankBack:'',
+            bankcount: '',
+            bankinfo: '',
           }
         }
 
@@ -176,6 +226,14 @@ export default {
     handleAvatarSuccessBack(res, file) {
         this.ruleForm.imageUrlBack = `${res.data.fileName}`;
         this.$refs['ruleForm'].validateField('imageUrlBack')
+      },
+    handleAvatarSuccessBank(res, file) {
+        this.ruleForm.imageUrlBank = `${res.data.fileName}`;
+        this.$refs['ruleForm'].validateField('imageUrlBank')
+      },
+      handleAvatarSuccessBankBack(res, file) {
+        this.ruleForm.imageUrlBankBack = `${res.data.fileName}`;
+        this.$refs['ruleForm'].validateField('imageUrlBankBack')
       },
       beforeAvatarUpload(file) {
         // const isLt2M = file.size / 1024 / 1024 < 2;
