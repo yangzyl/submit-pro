@@ -85,7 +85,7 @@
             </el-upload>
             <span>银行卡正面</span>
           </el-form-item>
-          <el-form-item prop="imageUrlBankBack">
+          <!-- <el-form-item prop="imageUrlBankBack">
             <el-upload
               class="avatar-uploader"
               action="api/image"
@@ -96,7 +96,7 @@
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
             <span>银行卡反面</span>
-          </el-form-item>
+          </el-form-item> -->
           <el-button style="margin: .32rem 0" type="primary" class="submitButton" @click="submitForm">确认开户</el-button>
         </el-form>
   </div>
@@ -178,9 +178,9 @@ export default {
         imageUrlBank: [
           { required: true, message: "请输入银行卡正面照片", trigger: "blur" },
         ],
-        imageUrlBankBack: [
-          { required: true, message: "请输入银行卡反面照片", trigger: "blur" },
-        ],
+        // imageUrlBankBack: [
+        //   { required: true, message: "请输入银行卡反面照片", trigger: "blur" },
+        // ],
       },
     }
   },
