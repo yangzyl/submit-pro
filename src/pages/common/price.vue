@@ -36,10 +36,10 @@
                 户名：黄安
               </div>
               <div class="cardText">
-                开户银行:光大银行上海松江支行
+                开户银行:农业银行上海滨江支行
               </div>
               <div class="cardText">
-                账号:6231 5606 0156 7689
+                账号:6228 4800 3933 9291 971
               </div>
             </el-card>
             <el-form-item label="订单金额" prop="orderCount">
